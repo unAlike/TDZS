@@ -1,2 +1,2 @@
 # TDZS
-Top does Zombie Shooter
+Top down Zombie Shooter
