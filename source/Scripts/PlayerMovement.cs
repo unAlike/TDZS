@@ -7,12 +7,14 @@ public class PlayerMovement : Area2D
     public delegate void Hit();
 
     [Export]
-    public int Speed = 400; //How fast the player will move
+    public float Speed = 0; //How fast the player will move
     public Vector2 ScreenSize; //Size of the game window
 
     public override void _Ready()
     {
         ScreenSize = GetViewportRect().Size;
+        Player player = new Player();
+        Speed = player.GetSpeed();
         //Hide();
     }
 
