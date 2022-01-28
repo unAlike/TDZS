@@ -7,7 +7,7 @@ public class PlayerMovement : Area2D
     public delegate void Hit();
 
     [Export]
-    public float Speed = 0; //How fast the player will move
+    public float Speed; //How fast the player will move
     public Vector2 ScreenSize; //Size of the game window
 
     public override void _Ready()
@@ -20,6 +20,7 @@ public class PlayerMovement : Area2D
 
     public override void _Process(float delta)
     {
+        LookAt(GetGlobalMousePosition());
         var velocity = Vector2.Zero;
 
         if(Input.IsActionPressed("move_right"))
@@ -39,16 +40,9 @@ public class PlayerMovement : Area2D
             velocity.y += 1;
         }
 
-        var animatedSprite = GetNode<AnimatedSprite>("AnimatedSprite");
-
         if(velocity.Length() > 0)
         {
             velocity = velocity.Normalized() * Speed;
-            animatedSprite.Play();
-        }
-        else
-        {
-            animatedSprite.Stop();
         }
 
         Position += velocity * delta;
@@ -56,17 +50,5 @@ public class PlayerMovement : Area2D
             x: Mathf.Clamp(Position.x, 0, ScreenSize.x),
             y: Mathf.Clamp(Position.y, 0, ScreenSize.y)
             );
-
-        if(velocity.x != 0)
-        {
-            animatedSprite.Animation = "walk";
-            animatedSprite.FlipV = false;
-            animatedSprite.FlipH = velocity.x < 0;
-        }
-        else if(velocity.y != 0)
-        {
-            animatedSprite.Animation = "up";
-            animatedSprite.FlipV = velocity.y  > 0;
-        }
     }
 }

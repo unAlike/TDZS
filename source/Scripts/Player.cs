@@ -7,7 +7,7 @@ public class Player
     // private int a = 2;
     // private string b = "text";
     private float health = 100;
-    private float speed = 10;
+    private float speed = 400;
 
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
