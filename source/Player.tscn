@@ -29,7 +29,7 @@ animations = [ {
 radius = 12.0
 height = 0.0
 
-[node name="Node" type="Node"]
+[node name="Node" type="Node2D"]
 
 [node name="Player" type="Area2D" parent="."]
 scale = Vector2( 5, 5 )

@@ -13,4 +13,9 @@ public class Bullet : RigidBody2D
         if (distanceTravelled > this.MaxDistance)
             this.QueueFree();
     }
+
+    public void _on_BulletPhysics_body_entered(RigidBody2D hit){
+        GD.Print("Hit");
+    }
+
 }

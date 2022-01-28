@@ -15,10 +15,12 @@ public class PlayerMovement : Area2D
 
     int shotCooldown = 0;
     PackedScene BulletScene;
+    PackedScene ZombieScene;
 
     public override void _Ready()
     {
         BulletScene = GD.Load<PackedScene>("res://Bullet.tscn");
+        ZombieScene = GD.Load<PackedScene>("res://Zombie.tscn");
         ScreenSize = GetViewportRect().Size;
         Player player = new Player();
         Speed = player.GetSpeed();
@@ -52,6 +54,11 @@ public class PlayerMovement : Area2D
         if(velocity.Length() > 0)
         {
             velocity = velocity.Normalized() * Speed;
+        }
+        if(Input.IsKeyPressed(32)){
+            Zombie zom = (Zombie)ZombieScene.Instance();
+            zom.setTarget(this);
+            GetParent().AddChild(zom);
         }
 
         Position += velocity * delta;
