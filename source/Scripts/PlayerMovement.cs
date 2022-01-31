@@ -56,8 +56,9 @@ public class PlayerMovement : Area2D
             velocity = velocity.Normalized() * Speed;
         }
         if(Input.IsKeyPressed(32)){
-            Zombie zom = (Zombie)ZombieScene.Instance();
+            Zombie zom = ZombieScene.Instance<Zombie>();
             zom.setTarget(this);
+            zom.Position = Position;
             GetParent().AddChild(zom);
         }
 
@@ -78,6 +79,7 @@ public class PlayerMovement : Area2D
         if(shotCooldown>fireDelay){
             shotCooldown = 0;
             Bullet bullet = (Bullet)BulletScene.Instance();
+            bullet.Rotation = (float)(Rotation + Math.PI/2);
             GetParent().AddChild(bullet);
             bullet.Position = Position;
             bullet.ApplyCentralImpulse(new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation)) * 1000);
