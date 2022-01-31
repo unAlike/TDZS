@@ -3,14 +3,10 @@ using System;
 
 public class Menu : Node
 {
-    // Declare member variables here. Examples:
-    // private int a = 2;
-    // private string b = "text";
-
-    // Called when the node enters the scene tree for the first time.
+    Panel Control;
     public override void _Ready()
     {
-        
+        Control = GetNode<Panel>("Controls");
     }
 
     public void _on_Play_pressed() {
@@ -18,16 +14,14 @@ public class Menu : Node
     }
 
     public void _on_Controls_pressed() {
-        GD.Print("Not implemented yet");
+        Control.Visible = true;
     }
 
     public void _on_Quit_pressed() {
-        GD.Print("Not implemented yet");
+        GetTree().Quit();
     }
 
-//  // Called every frame. 'delta' is the elapsed time since the previous frame.
-//  public override void _Process(float delta)
-//  {
-//      
-//  }
+    public void _on_Back_pressed() {
+        Control.Visible = false;
+    }
 }

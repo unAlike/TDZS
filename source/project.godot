@@ -14,6 +14,10 @@ config/name="Source"
 run/main_scene="res://Player.tscn"
 config/icon="res://icon.png"
 
+[global]
+
+font=false
+
 [input]
 
 move_left={
