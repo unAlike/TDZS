@@ -10,7 +10,6 @@ public class PlayerMovement : Area2D
     public float Speed; //How fast the player will move
 
     public Vector2 ScreenSize; //Size of the game window
-    private float lastDistance; //Store the distance from player to cursor from the last frame
     private AnimationPlayer animationPlayer; //Animation player
 
     public override void _Ready()
@@ -18,7 +17,6 @@ public class PlayerMovement : Area2D
         ScreenSize = GetViewportRect().Size;
         Player player = new Player();
         Speed = player.GetSpeed();
-        lastDistance = GlobalPosition.DistanceTo(GetGlobalMousePosition());
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
 
@@ -26,7 +24,6 @@ public class PlayerMovement : Area2D
     {
         LookAt(GetGlobalMousePosition());
         MovePlayer(delta);
-        lastDistance = GlobalPosition.DistanceTo(GetGlobalMousePosition());
     }
 
     public void MovePlayer(float delta)
