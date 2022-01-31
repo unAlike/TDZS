@@ -9,19 +9,28 @@ public class PlayerMovement : Area2D
     [Export]
     public float Speed; //How fast the player will move
 
+    [Export]
+    public int fireDelay = 50;
+
     public Vector2 ScreenSize; //Size of the game window
     private AnimationPlayer animationPlayer; //Animation player
 
+    int shotCooldown = 0;
+    PackedScene BulletScene;
+
     public override void _Ready()
     {
+        BulletScene = GD.Load<PackedScene>("res://Bullet.tscn");
         ScreenSize = GetViewportRect().Size;
         Player player = new Player();
         Speed = player.GetSpeed();
+
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
 
     public override void _Process(float delta)
     {
+        if(shotCooldown<=fireDelay) shotCooldown++;
         LookAt(GetGlobalMousePosition());
         MovePlayer(delta);
     }
@@ -73,5 +82,21 @@ public class PlayerMovement : Area2D
             x: Mathf.Clamp(Position.x, 0, ScreenSize.x),
             y: Mathf.Clamp(Position.y, 0, ScreenSize.y)
             );
+    }
+
+    public override void _Input(InputEvent inputEvent){
+        if(inputEvent is InputEventMouseButton button){
+            shoot();
+        }
+    }
+
+    public void shoot(){
+        if(shotCooldown>fireDelay){
+            shotCooldown = 0;
+            Bullet bullet = (Bullet)BulletScene.Instance();
+            GetParent().AddChild(bullet);
+            bullet.Position = Position;
+            bullet.ApplyCentralImpulse(new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation)) * 1000);
+        }
     }
 }
