@@ -11,6 +11,7 @@ public class PlayerMovement : Area2D
 
     public Vector2 ScreenSize; //Size of the game window
     private float lastDistance; //Store the distance from player to cursor from the last frame
+    private AnimationPlayer animationPlayer; //Animation player
 
     public override void _Ready()
     {
@@ -18,6 +19,7 @@ public class PlayerMovement : Area2D
         Player player = new Player();
         Speed = player.GetSpeed();
         lastDistance = GlobalPosition.DistanceTo(GetGlobalMousePosition());
+        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
 
     public override void _Process(float delta)
@@ -48,15 +50,23 @@ public class PlayerMovement : Area2D
             velocity.y += 1;
         }
 
-        //If the player is not moving in the direction they are facing, they move at 75% speed
-        float tempSpeed = Speed;
-        if(GetDirection() != velocity)
-            tempSpeed *= 0.75f;
+        
 
-        //Normalize velocity direction and multiply by speed if there is a velocity
+        //Normalize velocity direction and calculate speed based on direction
         if(velocity.Length() > 0)
         {   
+            float tempSpeed = Speed;
+            tempSpeed *= 1 - (Mathf.Abs(velocity.AngleTo(GetGlobalMousePosition() - GlobalPosition)) / (float)Math.PI);
+
+            if(tempSpeed < Speed * 0.65)
+                tempSpeed = Speed * 0.65f;
+
             velocity = velocity.Normalized() * tempSpeed;
+            animationPlayer.Play("Walk");
+        }
+        else
+        {
+            animationPlayer.Stop();
         }
         
         //Update Position
@@ -66,32 +76,5 @@ public class PlayerMovement : Area2D
             x: Mathf.Clamp(Position.x, 0, ScreenSize.x),
             y: Mathf.Clamp(Position.y, 0, ScreenSize.y)
             );
-    }
-
-    public Vector2 GetDirection()
-    {
-        float rotation = RotationDegrees;
-
-        //Make sure the direction is always a positive angle
-        if(rotation > 360)
-            RotationDegrees = 0;
-        if(rotation < -360)
-            RotationDegrees = 0;
-        if(rotation < 0)
-            RotationDegrees += 360;
-
-        Vector2 direction = Vector2.Zero;
-
-        //Convert angle to one of four directions
-        if(rotation < 45 || rotation > 315)
-            direction = Vector2.Right;
-        else if(rotation < 135)
-            direction = Vector2.Down;
-        else if(rotation < 225)
-            direction = Vector2.Left;
-        else if(rotation < 315)
-            direction = Vector2.Up;
-
-        return direction;
     }
 }
