@@ -10,7 +10,7 @@ public class Menu : Node
     }
 
     public void _on_Play_pressed() {
-        GetTree().ChangeScene("res://Player.tscn");
+        GetTree().ChangeScene("res://Level.tscn");
     }
 
     public void _on_Controls_pressed() {
