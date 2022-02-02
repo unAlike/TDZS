@@ -8,8 +8,8 @@
 
 [node name="TileMap" parent="." instance=ExtResource( 2 )]
 
-[node name="Player" parent="." instance=ExtResource( 3 )]
-
 [node name="Control" parent="." instance=ExtResource( 4 )]
 anchor_right = 0.0
 anchor_bottom = 0.0
+
+[node name="Player" parent="." instance=ExtResource( 3 )]

@@ -17,8 +17,7 @@ public class PlayerMovement : Area2D
     PackedScene BulletScene;
     PackedScene ZombieScene;
 
-    public override void _Ready()
-    {
+    public override void _Ready(){
         BulletScene = GD.Load<PackedScene>("res://Bullet.tscn");
         ZombieScene = GD.Load<PackedScene>("res://Zombie.tscn");
         ScreenSize = GetViewportRect().Size;
@@ -27,16 +26,22 @@ public class PlayerMovement : Area2D
         lastDistance = GlobalPosition.DistanceTo(GetGlobalMousePosition());
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
+    public override void _Input(InputEvent inputEvent){
+        GD.Print("run");
+        if(inputEvent is InputEventMouseButton button){
+            GD.Print("hoot");
+            shoot();
+            
+        }
+    }
 
-    public override void _Process(float delta)
-    {
+    public override void _Process(float delta){
         LookAt(GetGlobalMousePosition());
         MovePlayer(delta);
         lastDistance = GlobalPosition.DistanceTo(GetGlobalMousePosition());
     }
 
-    public void MovePlayer(float delta)
-    {
+    public void MovePlayer(float delta){
         var velocity = Vector2.Zero;
 
         if(Input.IsActionPressed("move_right"))
@@ -59,8 +64,7 @@ public class PlayerMovement : Area2D
         
 
         //Normalize velocity direction and calculate speed based on direction
-        if(velocity.Length() > 0)
-        {   
+        if(velocity.Length() > 0){   
             float tempSpeed = Speed;
             tempSpeed *= 1 - (Mathf.Abs(velocity.AngleTo(GetGlobalMousePosition() - GlobalPosition)) / (float)Math.PI);
 
@@ -70,8 +74,7 @@ public class PlayerMovement : Area2D
             velocity = velocity.Normalized() * tempSpeed;
             animationPlayer.Play("Walk");
         }
-        else
-        {
+        else{
             animationPlayer.Stop();
         }
         if(Input.IsKeyPressed(32)){
@@ -89,11 +92,7 @@ public class PlayerMovement : Area2D
             );
     }
 
-    public override void _Input(InputEvent inputEvent){
-        if(inputEvent is InputEventMouseButton button){
-            shoot();
-        }
-    }
+
 
     public void shoot(){
         if(shotCooldown>fireDelay){
