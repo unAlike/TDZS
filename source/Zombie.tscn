@@ -1,0 +1,44 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://art/Updated_Zombie_sprite.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Zombie.cs" type="Script" id=2]
+[ext_resource path="res://HealthBar.tscn" type="PackedScene" id=3]
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 9.55568
+height = 3.31332
+
+[node name="ZombieScene" type="Node2D"]
+position = Vector2( -1, -1 )
+script = ExtResource( 2 )
+
+[node name="HealthBar" parent="." instance=ExtResource( 3 )]
+margin_left = -55.0
+margin_top = -63.0
+margin_right = 145.0
+margin_bottom = -37.0
+rect_scale = Vector2( 0.419489, 0.515954 )
+
+[node name="Zombie" type="KinematicBody2D" parent="."]
+scale = Vector2( 3.12, 3.56 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Zombie"]
+position = Vector2( 0.123352, 0.141152 )
+rotation = 1.56947
+scale = Vector2( 1.34375, 1.75 )
+frames = SubResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zombie"]
+process_priority = 5
+position = Vector2( -6.09095, -0.652858 )
+rotation = 1.56947
+shape = SubResource( 1 )
+one_way_collision_margin = 0.0

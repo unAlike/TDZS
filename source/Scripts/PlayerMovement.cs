@@ -12,9 +12,15 @@ public class PlayerMovement : Area2D
     public Vector2 ScreenSize; //Size of the game window
     private float lastDistance; //Store the distance from player to cursor from the last frame
     private AnimationPlayer animationPlayer; //Animation player
+    int shotCooldown = 0;
+    int fireDelay = 30;
+    PackedScene BulletScene;
+    PackedScene ZombieScene;
 
     public override void _Ready()
     {
+        BulletScene = GD.Load<PackedScene>("res://Bullet.tscn");
+        ZombieScene = GD.Load<PackedScene>("res://Zombie.tscn");
         ScreenSize = GetViewportRect().Size;
         Player player = new Player();
         Speed = player.GetSpeed();
@@ -68,13 +74,35 @@ public class PlayerMovement : Area2D
         {
             animationPlayer.Stop();
         }
-        
-        //Update Position
+        if(Input.IsKeyPressed(32)){
+            Zombie zom = ZombieScene.Instance<Zombie>();
+            zom.setTarget(this);
+            zom.Position = Position;
+            GetParent().AddChild(zom);
+        }
+
         Position += velocity * delta;
         //Clamp Position to stay on screen
         Position = new Vector2(
             x: Mathf.Clamp(Position.x, 0, ScreenSize.x),
             y: Mathf.Clamp(Position.y, 0, ScreenSize.y)
             );
+    }
+
+    public override void _Input(InputEvent inputEvent){
+        if(inputEvent is InputEventMouseButton button){
+            shoot();
+        }
+    }
+
+    public void shoot(){
+        if(shotCooldown>fireDelay){
+            shotCooldown = 0;
+            Bullet bullet = (Bullet)BulletScene.Instance();
+            bullet.Rotation = (float)(Rotation + Math.PI/2);
+            GetParent().AddChild(bullet);
+            bullet.Position = Position;
+            bullet.ApplyCentralImpulse(new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation)) * 1000);
+        }
     }
 }
