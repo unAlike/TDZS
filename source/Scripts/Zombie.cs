@@ -22,9 +22,10 @@ public class Zombie : Node2D
     public override void _Process(float delta){
         if(target!=null){
             KinematicBody2D zom = GetNode<KinematicBody2D>("Zombie");
-            zom.LookAt(target.Position);
-            velocity = zom.Position.DirectionTo(target.Position) * 100;
+            zom.LookAt(target.GlobalPosition);
+            velocity = zom.GlobalPosition.DirectionTo(target.GlobalPosition) * 100;
             velocity = zom.MoveAndSlide(velocity);
+            GD.Print("Player pos: " + target.Position + " \nZombie pos: " + zom.GlobalPosition);
             healthProg.SetPosition(zom.Position + new Vector2(-60,-60));
         }
         

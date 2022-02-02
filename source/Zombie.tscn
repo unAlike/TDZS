@@ -13,7 +13,7 @@ animations = [ {
 } ]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 9.55568
+radius = 8.52015
 height = 3.31332
 
 [node name="ZombieScene" type="Node2D"]
@@ -25,7 +25,7 @@ margin_left = -55.0
 margin_top = -63.0
 margin_right = 145.0
 margin_bottom = -37.0
-rect_scale = Vector2( 0.419489, 0.515954 )
+rect_scale = Vector2( 0.409258, 0.522655 )
 
 [node name="Zombie" type="KinematicBody2D" parent="."]
 scale = Vector2( 3.12, 3.56 )

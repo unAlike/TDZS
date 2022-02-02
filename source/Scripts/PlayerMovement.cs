@@ -12,8 +12,8 @@ public class PlayerMovement : Area2D
     public Vector2 ScreenSize; //Size of the game window
     private float lastDistance; //Store the distance from player to cursor from the last frame
     private AnimationPlayer animationPlayer; //Animation player
-    int shotCooldown = 0;
-    int fireDelay = 30;
+    float shotCooldown = 0;
+    float fireDelay = 0.5f;
     PackedScene BulletScene;
     PackedScene ZombieScene;
 
@@ -27,15 +27,14 @@ public class PlayerMovement : Area2D
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
     public override void _Input(InputEvent inputEvent){
-        GD.Print("run");
         if(inputEvent is InputEventMouseButton button){
-            GD.Print("hoot");
             shoot();
-            
+            GD.Print("Shot");
         }
     }
 
     public override void _Process(float delta){
+        shotCooldown += delta;
         LookAt(GetGlobalMousePosition());
         MovePlayer(delta);
         lastDistance = GlobalPosition.DistanceTo(GetGlobalMousePosition());
@@ -100,8 +99,11 @@ public class PlayerMovement : Area2D
             Bullet bullet = (Bullet)BulletScene.Instance();
             bullet.Rotation = (float)(Rotation + Math.PI/2);
             GetParent().AddChild(bullet);
+            // GetParent().AddChildBelowNode(GetNode<Area2D>("Player"), bullet);
             bullet.Position = Position;
             bullet.ApplyCentralImpulse(new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation)) * 1000);
+            GD.Print(bullet);
+
         }
     }
 }
