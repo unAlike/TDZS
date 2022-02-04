@@ -15,6 +15,7 @@ margin_right = 1024.0
 margin_bottom = 600.0
 
 [node name="Player" parent="." instance=ExtResource( 3 )]
+position = Vector2( -265, -291 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 scale = Vector2( 0.5, 0.5 )

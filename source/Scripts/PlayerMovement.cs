@@ -1,11 +1,11 @@
 using Godot;
 using System;
 
-public class PlayerMovement : Area2D
+public class PlayerMovement : KinematicBody2D
 {
     [Signal]
     public delegate void Hit();
-
+    
     private float speed; //How fast the player will move
     private float minSpeed = 270; //Minimum Speed
     private float acceleration = 0.3f; //Determines how fast the player gets up to speed
@@ -25,12 +25,13 @@ public class PlayerMovement : Area2D
     float fireDelay = 0.5f;
     PackedScene BulletScene;
     PackedScene ZombieScene;
+    public Player player;
 
     public override void _Ready(){
 
         BulletScene = GD.Load<PackedScene>("res://Bullet.tscn");
         ZombieScene = GD.Load<PackedScene>("res://Zombie.tscn");
-        Player player = new Player();
+        player = new Player();
         speed = player.GetSpeed();
         stamina = maxStamina;
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
@@ -121,7 +122,7 @@ public class PlayerMovement : Area2D
         }
 
         //Update the players position
-        Position += velocity * delta;
+        MoveAndSlide(velocity);
     }
 
 
@@ -133,7 +134,7 @@ public class PlayerMovement : Area2D
             bullet.Rotation = (float)(Rotation + Math.PI/2);
             GetParent().AddChild(bullet);
             // GetParent().AddChildBelowNode(GetNode<Area2D>("Player"), bullet);
-            bullet.Position = Position;
+            bullet.Position = GetNode<Position2D>("MuzzlePos").GlobalPosition;
             bullet.ApplyCentralImpulse(new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation)) * 1000);
             GD.Print(bullet);
 

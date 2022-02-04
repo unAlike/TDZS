@@ -26,6 +26,9 @@ public class Bullet : RigidBody2D
             body.GetNode<TextureProgress>("HealthBar");
             this.QueueFree();
         }
+        if(body.Name == "TileMap"){
+            this.QueueFree();
+        }
     }
 
 }
