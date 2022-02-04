@@ -6,32 +6,32 @@ public class PlayerMovement : Area2D
     [Signal]
     public delegate void Hit();
 
-    [Export]
-    public float Speed; //How fast the player will move
+    private float speed; //How fast the player will move
+    private float minSpeed = 270; //Minimum Speed
+    private float acceleration = 0.3f; //Determines how fast the player gets up to speed
+    private float friction = 0.1f; //Determines how fast the player slows down
 
-    public float friction = 0.05f; //Determines how fast the player slows down
-    public float acceleration = 0.3f; //Determines how fast the player gets up to speed
-    public Vector2 velocity = Vector2.Zero; //Velocity that starts at zero
-    public bool sprint; //Tells if the player is hitting the sprint button
-    public float sprintMultiplier = 1.5f; //Speed multiplier when sprinting
-    public float maxStamina = 1; //Maximum amount of stamina
-    public float stamina; //Holds the current stamina at any point
-    public float staminaGainRate = 0.5f; //Rate that stamina regenerates at
+    private bool sprint; //Tells if the player is hitting the sprint button
+    private float sprintMultiplier = 1.5f; //Speed multiplier when sprinting
+    private float maxStamina = 1; //Maximum amount of stamina
+    private float stamina; //Holds the current stamina at any point
+    private float staminaGainRate = 0.5f; //Rate that stamina regenerates at
 
-    public Vector2 ScreenSize; //Size of the game window
+    private Vector2 velocity = Vector2.Zero; //Velocity that starts at zero
 
     private AnimationPlayer animationPlayer; //Animation player
+
     float shotCooldown = 0;
     float fireDelay = 0.5f;
     PackedScene BulletScene;
     PackedScene ZombieScene;
 
     public override void _Ready(){
+
         BulletScene = GD.Load<PackedScene>("res://Bullet.tscn");
         ZombieScene = GD.Load<PackedScene>("res://Zombie.tscn");
-        ScreenSize = GetViewportRect().Size;
         Player player = new Player();
-        Speed = player.GetSpeed();
+        speed = player.GetSpeed();
         stamina = maxStamina;
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
     }
@@ -49,24 +49,19 @@ public class PlayerMovement : Area2D
     }
 
     public void MovePlayer(float delta){
-        var inputVelocity = Vector2.Zero;
 
+        //Start each frame with clear input velocity
+        Vector2 inputVelocity = Vector2.Zero;
+
+        //Read user input to inputVelocity
         if(Input.IsActionPressed("move_right"))
-        {
             inputVelocity.x += 1;
-        }
         if(Input.IsActionPressed("move_left"))
-        {
             inputVelocity.x -= 1;
-        }
         if(Input.IsActionPressed("move_up"))
-        {
             inputVelocity.y -= 1;
-        }
         if(Input.IsActionPressed("move_down"))
-        {
             inputVelocity.y += 1;
-        }
 
         //Check if the player is pressing the sprint button
         if(Input.IsActionPressed("sprint"))
@@ -74,28 +69,24 @@ public class PlayerMovement : Area2D
         else
             sprint = false;
 
-       //Normalize velocity direction and calculate speed based on direction
+        //Calculate speed and move the player if there is any inputVelocity
         if(inputVelocity.Length() > 0)
         {   
-
-            float tempSpeed = Speed;
+            //tempSpeed will be modified depending on sprint and direction they're walking
+            float tempSpeed = speed;
             
-            //Move at full speed in direction being faced, slower if moving in a different direction.
+            //Speed adjusted depending on the angle between player facing direction and velocity direction. Player moves slower the further away the vectors
             tempSpeed *= 1 - (Mathf.Abs(inputVelocity.AngleTo(GetGlobalMousePosition() - GlobalPosition)) / (float)Math.PI);
 
-            //Speed can't be lower than 70%
-            if(tempSpeed < Speed * 0.70)
-                tempSpeed = Speed * 0.70f;
+            //Speed can't be lower than min speed
+            if(tempSpeed < minSpeed)
+                tempSpeed = minSpeed;
 
-            //Decrement the stamina while the player is sprinting, else regenerate stamina
+            //Decrement the stamina while the player is sprinting and increase speed
             if(sprint && stamina > 0)
             {
                 tempSpeed *= sprintMultiplier;
                 stamina -= delta;
-            }
-            else if(!sprint && stamina < maxStamina)
-            {
-                stamina += delta * staminaGainRate;
             }
                 
             //Set the final input velocity after modifying for direction and sprinting
@@ -103,19 +94,23 @@ public class PlayerMovement : Area2D
 
             //Change actual velocity smoothly
             velocity = velocity.LinearInterpolate(inputVelocity, acceleration);
+
+            //Play the walk animation
             animationPlayer.Play("Walk");
         }
         else
         {
             //If no movement input, slow down to zero velocity
             velocity = velocity.LinearInterpolate(Vector2.Zero, friction);
-            animationPlayer.Stop();
 
-            //Regenerate stamina while not moving
-            if(stamina < maxStamina)
-            {
-                stamina += delta * staminaGainRate;
-            }
+            //Stop playing the walk animation
+            animationPlayer.Stop();
+        }
+
+        //Regenerate stamina if not sprinting
+        if(stamina < maxStamina && !sprint)
+        {
+            stamina += delta * staminaGainRate;
         }
 
         if(Input.IsKeyPressed(32)){
@@ -125,7 +120,8 @@ public class PlayerMovement : Area2D
             GetParent().AddChild(zom);
         }
 
-        Position += inputVelocity * delta;
+        //Update the players position
+        Position += velocity * delta;
     }
 
 

@@ -43,7 +43,6 @@ tracks/0/keys = {
 [node name="Player" type="Area2D"]
 scale = Vector2( 2, 2 )
 script = ExtResource( 5 )
-Speed = 400.0
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708
