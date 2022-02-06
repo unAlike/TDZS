@@ -53,8 +53,8 @@ public class Zombie : Node2D
             PlayerMovement player = (PlayerMovement)body;
             player.player.SetHealth(player.player.GetHealth()-1);
             GD.Print(player.player.GetHealth());
-            Vector2 vel = new Vector2(0,0);
-            
+            player.knockback = 3;
+            player.lasthitbody = GetNode<KinematicBody2D>("Zombie");
         }
     }
 

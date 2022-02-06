@@ -26,6 +26,8 @@ public class PlayerMovement : KinematicBody2D
     PackedScene BulletScene;
     PackedScene ZombieScene;
     public Player player;
+    public float knockback = 0;
+    public KinematicBody2D lasthitbody;
 
     public override void _Ready(){
 
@@ -50,7 +52,6 @@ public class PlayerMovement : KinematicBody2D
     }
 
     public void MovePlayer(float delta){
-
         //Start each frame with clear input velocity
         Vector2 inputVelocity = Vector2.Zero;
 
@@ -120,7 +121,13 @@ public class PlayerMovement : KinematicBody2D
             zom.Position = Position;
             GetParent().AddChild(zom);
         }
+        if(knockback>0){
+            Vector2 knock_point =  GlobalPosition - lasthitbody.GlobalPosition;
+            velocity = knock_point.Normalized() * 800;
 
+            MoveAndSlide(velocity);
+            knockback--;
+        }
         //Update the players position
         MoveAndSlide(velocity);
     }
