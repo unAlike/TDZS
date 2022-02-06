@@ -9,7 +9,7 @@ public class Zombie : Node2D
 
     // Called when the node enters the scene tree for the first time.
     int health = 3;
-    public Area2D target;
+    public KinematicBody2D target;
     public Vector2 velocity = new Vector2();
     TextureProgress healthProg;
 
@@ -25,7 +25,6 @@ public class Zombie : Node2D
             zom.LookAt(target.GlobalPosition);
             velocity = zom.GlobalPosition.DirectionTo(target.GlobalPosition) * 100;
             velocity = zom.MoveAndSlide(velocity);
-            GD.Print("Player pos: " + target.Position + " \nZombie pos: " + zom.GlobalPosition);
             healthProg.SetPosition(zom.Position + new Vector2(-60,-60));
         }
         
@@ -45,8 +44,18 @@ public class Zombie : Node2D
         return health;
     }
 
-    public void setTarget(Area2D t){
+    public void setTarget(KinematicBody2D t){
         target = t;
+    }
+
+    public void BodyEntered(Node body){
+        if(body.Name == "Player"){
+            PlayerMovement player = (PlayerMovement)body;
+            player.player.SetHealth(player.player.GetHealth()-1);
+            GD.Print(player.player.GetHealth());
+            player.knockback = 3;
+            player.lasthitbody = GetNode<KinematicBody2D>("Zombie");
+        }
     }
 
 }
