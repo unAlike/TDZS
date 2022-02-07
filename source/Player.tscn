@@ -1,62 +1,79 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://art/Main_Character_Walk_Animation_Sprite_Sheet.png" type="Texture" id=1]
+[ext_resource path="res://art/MC_Death_Animation_Sprite_Sheet.png" type="Texture" id=2]
 [ext_resource path="res://Scripts/PlayerMovement.cs" type="Script" id=5]
 
 [sub_resource type="CircleShape2D" id=5]
 radius = 11.0
 
-[sub_resource type="Animation" id=3]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0 ]
-}
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="Animation" id=4]
-resource_name = "Walk"
-length = 0.4
-loop = true
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ 0, 1 ]
-}
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 2 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 2 )
+region = Rect2( 160, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 2 )
+region = Rect2( 192, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 2 )
+region = Rect2( 224, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
+"loop": true,
+"name": "Death",
+"speed": 15.0
+}, {
+"frames": [ SubResource( 6 ), SubResource( 7 ) ],
+"loop": true,
+"name": "Walk",
+"speed": 5.0
+} ]
 
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 5 )
-
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 5.00006, 5.72205e-05 )
-rotation = 1.5708
-scale = Vector2( 3, 3 )
-texture = ExtResource( 1 )
-hframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2( -10, -2 )
 scale = Vector2( 3, 3 )
 shape = SubResource( 5 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 3 )
-anims/Walk = SubResource( 4 )
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 6, 0 )
+rotation = 1.5708
+scale = Vector2( 3, 3 )
+frames = SubResource( 8 )
+animation = "Death"
 
 [node name="MuzzlePos" type="Position2D" parent="."]
 position = Vector2( 49, -2 )

@@ -19,7 +19,7 @@ public class PlayerMovement : KinematicBody2D
 
     private Vector2 velocity = Vector2.Zero; //Velocity that starts at zero
 
-    private AnimationPlayer animationPlayer; //Animation player
+    private AnimatedSprite animationPlayer; //Animation player
 
     float shotCooldown = 0;
     float fireDelay = 0.5f;
@@ -36,7 +36,7 @@ public class PlayerMovement : KinematicBody2D
         player = new Player();
         speed = player.GetSpeed();
         stamina = maxStamina;
-        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+        animationPlayer = GetNode<AnimatedSprite>("AnimatedSprite");
     }
     public override void _Input(InputEvent inputEvent){
         if(inputEvent is InputEventMouseButton button){
