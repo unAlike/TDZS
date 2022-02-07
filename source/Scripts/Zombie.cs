@@ -12,10 +12,12 @@ public class Zombie : Node2D
     public KinematicBody2D target;
     public Vector2 velocity = new Vector2();
     TextureProgress healthProg;
+    Navigation2D nav;
 
     public override void _Ready()
     {
         healthProg = GetNode<TextureProgress>("HealthBar");
+        nav = GetNode<KinematicBody2D>("Zombie").GetNode<Navigation2D>("Navigation2D");
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -23,8 +25,10 @@ public class Zombie : Node2D
         if(target!=null){
             KinematicBody2D zom = GetNode<KinematicBody2D>("Zombie");
             zom.LookAt(target.GlobalPosition);
-            velocity = zom.GlobalPosition.DirectionTo(target.GlobalPosition) * 300;
-            velocity = zom.MoveAndSlide(velocity);
+            zom.GlobalPosition = nav.GetSimplePath(zom.GlobalPosition, target.GlobalPosition)[0];
+            // velocity = nav.GetClosestPoint(zom.GlobalPosition.DirectionTo(target.GlobalPosition)) * 300;
+            // velocity = zom.MoveAndSlide(velocity);
+            // nav.
             healthProg.SetPosition(zom.Position + new Vector2(-60,-60));
         }
         
