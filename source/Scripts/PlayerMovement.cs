@@ -47,8 +47,14 @@ public class PlayerMovement : KinematicBody2D
 
     public override void _Process(float delta){
         shotCooldown += delta;
-        LookAt(GetGlobalMousePosition());
-        MovePlayer(delta);
+        
+        if(player.GetHealth()>0){ 
+            MovePlayer(delta);
+            LookAt(GetGlobalMousePosition());
+        }
+        else{
+            //Death Anim End Game
+        }
     }
 
     public void MovePlayer(float delta){
