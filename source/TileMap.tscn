@@ -281,10 +281,10 @@ tile_data = PoolIntArray( -262148, 3, 0, -262147, 3, 0, -262146, 3, 0, -262145, 
 
 [node name="ColorRect" type="ColorRect" parent="."]
 show_behind_parent = true
-margin_left = -5000.0
+margin_left = -5470.0
 margin_top = -5000.0
-margin_right = 5000.0
-margin_bottom = 5000.0
+margin_right = 8150.0
+margin_bottom = 6976.0
 color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false

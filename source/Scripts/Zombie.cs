@@ -23,7 +23,7 @@ public class Zombie : Node2D
         if(target!=null){
             KinematicBody2D zom = GetNode<KinematicBody2D>("Zombie");
             zom.LookAt(target.GlobalPosition);
-            velocity = zom.GlobalPosition.DirectionTo(target.GlobalPosition) * 100;
+            velocity = zom.GlobalPosition.DirectionTo(target.GlobalPosition) * 300;
             velocity = zom.MoveAndSlide(velocity);
             healthProg.SetPosition(zom.Position + new Vector2(-60,-60));
         }

@@ -22,7 +22,7 @@ public class PlayerMovement : KinematicBody2D
     private AnimatedSprite animationPlayer; //Animation player
 
     float shotCooldown = 0;
-    float fireDelay = 0.5f;
+    float fireDelay = 0.2f;
     PackedScene BulletScene;
     PackedScene ZombieScene;
     public Player player;
