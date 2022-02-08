@@ -9,6 +9,7 @@ public class Zombie : Node2D
 
     // Called when the node enters the scene tree for the first time.
     int health = 3;
+    static int score = 0;
     public KinematicBody2D target;
     public Vector2 velocity = new Vector2();
     TextureProgress healthProg;
@@ -32,6 +33,7 @@ public class Zombie : Node2D
     public void setHealth(int nhealth){
         
         if(nhealth <= 0){
+            score++;
             QueueFree();
             //TODO DEATH CODE
         }
@@ -39,6 +41,12 @@ public class Zombie : Node2D
             health = nhealth;
             healthProg.Value = nhealth;
         }
+    }
+    public void setScore(int _score) {
+        score = _score;
+    }
+    public int getScore() {
+        return score;
     }
     public int getHealth(){
         return health;

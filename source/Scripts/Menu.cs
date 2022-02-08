@@ -3,11 +3,13 @@ using System;
 
 public class Menu : Node
 {
-    Panel Control;
+    ColorRect Controls;
+    ColorRect Main;
     bool InMenu = false;
     public override void _Ready()
     {
-        Control = GetNode<Panel>("Controls");
+        Controls = GetNode<ColorRect>("Controls");
+        Main = GetNode<ColorRect>("Main");
     }
 
     public void _on_Play_pressed() {
@@ -15,7 +17,8 @@ public class Menu : Node
     }
 
     public void _on_Controls_pressed() {
-        Control.Visible = true;
+        Controls.Visible = true;
+        Main.Visible = false;
         InMenu = true;
     }
 
@@ -24,13 +27,15 @@ public class Menu : Node
     }
 
     public void _on_Back_pressed() {
-        Control.Visible = false;
+        Controls.Visible = false;
+        Main.Visible = true;
     }
 
     public override void _Process(float delta)
   {
       if(Input.IsActionJustPressed("ui_cancel") & InMenu == true) {
-          Control.Visible = false;
+          Controls.Visible = false;
+          Main.Visible = true;
       }
   }
 }

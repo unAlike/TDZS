@@ -6,7 +6,7 @@ public class Player
     // Declare member variables here. Examples:
     // private int a = 2;
     // private string b = "text";
-    private float health = 100;
+    private static float health = 100;
     private float speed = 400;
 
 
