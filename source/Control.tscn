@@ -202,3 +202,5 @@ text = "Main Menu"
 [connection signal="pressed" from="PauseMenu/VBoxContainer/Controls" to="." method="_on_Controls_pressed"]
 [connection signal="pressed" from="PauseMenu/VBoxContainer/MainMenu" to="." method="_on_MainMenu_pressed"]
 [connection signal="pressed" from="Controls/Back" to="." method="_on_Back_pressed"]
+[connection signal="pressed" from="DeathMenu/VBoxContainer/Replay" to="." method="_on_Replay_pressed"]
+[connection signal="pressed" from="DeathMenu/VBoxContainer/MainMenu" to="." method="_on_MainMenu_pressed"]
