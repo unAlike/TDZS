@@ -56,7 +56,4 @@ collision_mask = 3
 position = Vector2( 36, -2 )
 shape = SubResource( 3 )
 
-[node name="Navigation2D" type="Navigation2D" parent="Zombie"]
-scale = Vector2( -6.73439, 1.20439 )
-
 [connection signal="body_entered" from="Zombie/Area2D" to="." method="BodyEntered"]

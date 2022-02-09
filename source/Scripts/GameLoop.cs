@@ -8,11 +8,13 @@ public class GameLoop : Node
     RandomNumberGenerator rng = new RandomNumberGenerator();
     PackedScene ZombieScene;
     PlayerMovement player;
+    Navigation2D nav;
     int zomcount = 0;
     public override void _Ready()
     {
         ZombieScene = GD.Load<PackedScene>("res://Zombie.tscn");
         player = (PlayerMovement)GetNode<KinematicBody2D>("Player");
+        nav = GetNode<Navigation2D>("Navigation2D");
 
     }
     public override void _Process(float delta)
@@ -21,7 +23,7 @@ public class GameLoop : Node
         if(Math.Floor(time)>zomcount){
             SpawnZombie();
             zomcount++;
-            GD.Print("Spawned Zombie");
+            //GD.Print("Spawned Zombie");
         }
     }
 
@@ -37,15 +39,16 @@ public class GameLoop : Node
             if(tile.GetCell(x,y) == TileMap.InvalidCell || tile.GetCell(x,y) == 3){
                 x = rng.RandiRange((int)(rect.Position.x),(int)(rect.End.x));
                 y = rng.RandiRange((int)(rect.Position.y),(int)(rect.End.y));
-                GD.Print(x + " " + y + " Invalid Spawn");
+                //GD.Print(x + " " + y + " Invalid Spawn");
             }
             else{
                 Zombie zom = ZombieScene.Instance<Zombie>();
                 zom.setTarget(player);
+                zom.setNav(nav);
                 GetParent().AddChild(zom);
                 zom.GlobalPosition = new Vector2(tile.MapToWorld(new Vector2(x,y)));
                 spawned = true;
-                GD.Print("Spanwed Zombie at: X: " + x + "  Y: "+y);
+                //GD.Print("Spanwed Zombie at: X: " + x + "  Y: "+y);
             }
         }
     }
