@@ -23,7 +23,6 @@ public class Bullet : RigidBody2D
         if(body.Name == "Zombie"){
             Zombie zom = body.GetParent<Zombie>();
             zom.setHealth(zom.getHealth()-1);
-            body.GetNode<TextureProgress>("HealthBar");
             this.QueueFree();
         }
         if(body.Name == "TileMap"){

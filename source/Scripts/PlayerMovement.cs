@@ -124,12 +124,6 @@ public class PlayerMovement : KinematicBody2D
             stamina += delta * staminaGainRate;
         }
 
-        if(Input.IsKeyPressed(32)){
-            Zombie zom = ZombieScene.Instance<Zombie>();
-            zom.setTarget(this);
-            zom.Position = Position;
-            GetParent().AddChild(zom);
-        }
         if(knockback>0){
             Vector2 knock_point =  GlobalPosition - lasthitbody.GlobalPosition;
             velocity = knock_point.Normalized() * 800;

@@ -43,6 +43,7 @@ scale = Vector2( 3.12, 3.56 )
 position = Vector2( 0.123352, 0.141152 )
 rotation = 1.56947
 scale = Vector2( 1.34375, 1.75 )
+z_index = 9
 frames = SubResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Zombie"]
@@ -64,7 +65,6 @@ shape = SubResource( 3 )
 [node name="Navigation2D" type="Navigation2D" parent="Zombie"]
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Zombie/Navigation2D"]
-scale = Vector2( 1, 1 )
 navpoly = SubResource( 4 )
 
 [connection signal="body_entered" from="Zombie/Area2D" to="." method="BodyEntered"]

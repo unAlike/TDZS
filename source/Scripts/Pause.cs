@@ -51,9 +51,12 @@ public override void _Ready()
 
   public void _on_MainMenu_pressed() {
       GetTree().Paused = !GetTree().Paused;
+      GetTree().CurrentScene.QueueFree();
       GetTree().ChangeScene("res://MainMenu.tscn");
+      
       InPause = false;
-      Death.SetHealth(100);
+      Death.SetHealth(Death.GetMaxHealth());
+      
   }
 
    public void _on_Back_pressed() {
@@ -64,7 +67,7 @@ public override void _Ready()
 
    public void _on_Replay_pressed() {
        GetTree().ReloadCurrentScene();
-       Death.SetHealth(100);
+       Death.SetHealth(Death.GetMaxHealth());
        GetTree().Paused = false;
    }
 

@@ -20,6 +20,7 @@ public class UI : Node
   public override void _Process(float delta)
   {
       PlayerHealth.Value = HealthUI.GetHealth();
+      PlayerHealth.MaxValue = HealthUI.GetMaxHealth();
       ScoreUI.Text = "" + (Score.getScore());
   }
 

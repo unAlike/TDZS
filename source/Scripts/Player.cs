@@ -6,8 +6,9 @@ public class Player
     // Declare member variables here. Examples:
     // private int a = 2;
     // private string b = "text";
-    private static float health = 100;
+    private static float health = 30;
     private float speed = 400;
+    private float maxHealth = 30;
 
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -28,5 +29,9 @@ public class Player
     }
     public void SetSpeed(float newSpeed){
         speed = newSpeed;
+    }
+
+    public float GetMaxHealth(){
+        return maxHealth;
     }
 }

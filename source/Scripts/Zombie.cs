@@ -15,6 +15,7 @@ public class Zombie : Node2D
     public Vector2 velocity = new Vector2();
     TextureProgress healthProg;
     Navigation2D nav;
+    Node scene;
     List<Vector2> path; //Stores a list of points which make up a path to the target
 
     int currentPoint = 1; //Stores the current point to move to
@@ -22,6 +23,7 @@ public class Zombie : Node2D
 
     public override void _Ready()
     {
+        scene = GetTree().CurrentScene;
         healthProg = GetNode<TextureProgress>("HealthBar");
     }
 
@@ -40,7 +42,9 @@ public class Zombie : Node2D
             if(GlobalPosition.DistanceTo(path[path.Count-1]) > 2)
             {
                 //Generate a new path towards the players current position
-                path = new List<Vector2>(nav.GetSimplePath(zom.GlobalPosition, target.GlobalPosition, true));
+                if(GetTree().CurrentScene == scene){
+                    path = new List<Vector2>(nav.GetSimplePath(zom.GlobalPosition, target.GlobalPosition, true));
+                }
                 currentPoint = 1; //Reset the current point to the first point of the new path
             }
             
