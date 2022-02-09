@@ -17,6 +17,7 @@ public class Zombie : Node2D
     List<Vector2> path; //Stores a list of points which make up a path to the target
 
     int currentPoint = 1; //Stores the current point to move to
+    int speed = 280;
 
     public override void _Ready()
     {
@@ -32,13 +33,13 @@ public class Zombie : Node2D
     {
         if(target!=null){
             KinematicBody2D zom = GetNode<KinematicBody2D>("Zombie");
-            zom.LookAt(target.GlobalPosition);
+            zom.LookAt(path[currentPoint]);
 
             //If the player is not within range of the end of the current path...
             if(GlobalPosition.DistanceTo(path[path.Count-1]) > 2)
             {
                 //Generate a new path towards the players current position
-                path = new List<Vector2>(nav.GetSimplePath(zom.GlobalPosition, target.GlobalPosition, false));
+                path = new List<Vector2>(nav.GetSimplePath(zom.GlobalPosition, target.GlobalPosition, true));
                 currentPoint = 1; //Reset the current point to the first point of the new path
             }
             
@@ -46,7 +47,7 @@ public class Zombie : Node2D
             if(path.Count != 0)
             {
                 //Move Zombie towards the current point
-                velocity = zom.GlobalPosition.DirectionTo(path[currentPoint]) * 300;
+                velocity = zom.GlobalPosition.DirectionTo(path[currentPoint]) * speed;
                 zom.MoveAndSlide(velocity);
             }
 
@@ -98,7 +99,7 @@ public class Zombie : Node2D
     public void setNav(Navigation2D levelNav)
     {
         nav = levelNav;
-        path = new List<Vector2>(nav.GetSimplePath(GlobalPosition, target.GlobalPosition)); //Generate an initial path
+        path = new List<Vector2>(nav.GetSimplePath(GlobalPosition, target.GlobalPosition, true)); //Generate an initial path
         
     }
 

@@ -29,6 +29,7 @@ public class PlayerMovement : KinematicBody2D
     public float knockback = 0;
     public KinematicBody2D lasthitbody;
 
+
     public override void _Ready(){
 
         BulletScene = GD.Load<PackedScene>("res://Bullet.tscn");
@@ -47,7 +48,9 @@ public class PlayerMovement : KinematicBody2D
 
     public override void _Process(float delta){
         shotCooldown += delta;
-        
+        if(Input.IsMouseButtonPressed(1)){
+            shoot();
+        }
         if(player.GetHealth()>0){ 
             MovePlayer(delta);
             LookAt(GetGlobalMousePosition());
@@ -148,7 +151,7 @@ public class PlayerMovement : KinematicBody2D
             GetParent().AddChild(bullet);
             // GetParent().AddChildBelowNode(GetNode<Area2D>("Player"), bullet);
             bullet.Position = GetNode<Position2D>("MuzzlePos").GlobalPosition;
-            bullet.ApplyCentralImpulse(new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation)) * 1000);
+            bullet.ApplyCentralImpulse(new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation)) * 3000);
             GD.Print(bullet);
 
         }
