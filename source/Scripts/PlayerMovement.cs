@@ -25,7 +25,7 @@ public class PlayerMovement : KinematicBody2D
     float fireDelay = 0.2f;
     PackedScene BulletScene;
     PackedScene ZombieScene;
-    public Player player;
+    public Player player = new Player();
     public float knockback = 0;
     public KinematicBody2D lasthitbody;
 
@@ -34,7 +34,6 @@ public class PlayerMovement : KinematicBody2D
 
         BulletScene = GD.Load<PackedScene>("res://Bullet.tscn");
         ZombieScene = GD.Load<PackedScene>("res://Zombie.tscn");
-        player = new Player();
         speed = player.GetSpeed();
         stamina = maxStamina;
         animationPlayer = GetNode<AnimatedSprite>("AnimatedSprite");

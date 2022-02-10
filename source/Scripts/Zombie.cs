@@ -20,9 +20,12 @@ public class Zombie : Node2D
 
     int currentPoint = 1; //Stores the current point to move to
     int speed = 280;
+    Player player;
 
     public override void _Ready()
     {
+        var playerm =  (PlayerMovement)(GetTree().CurrentScene.GetNode<KinematicBody2D>("Player"));
+        player = playerm.player;
         scene = GetTree().CurrentScene;
         healthProg = GetNode<TextureProgress>("HealthBar");
     }
@@ -74,7 +77,7 @@ public class Zombie : Node2D
     public void setHealth(int nhealth){
         
         if(nhealth <= 0){
-            score++;
+            player.AddKills(1);
             QueueFree();
             //TODO DEATH CODE
         }

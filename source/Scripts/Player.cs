@@ -9,6 +9,7 @@ public class Player
     private static float health = 30;
     private float speed = 400;
     private float maxHealth = 30;
+    private int kills = 0;
 
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -33,5 +34,14 @@ public class Player
 
     public float GetMaxHealth(){
         return maxHealth;
+    }
+    public int GetKills(){
+        return kills;
+    }
+    public void AddKills(int i){
+        kills += i;
+    }
+    public void SetKills(int i){
+        kills = i;
     }
 }
