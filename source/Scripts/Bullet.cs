@@ -22,7 +22,9 @@ public class Bullet : RigidBody2D
         GD.Print(body);
         if(body.Name == "Zombie"){
             Zombie zom = body.GetParent<Zombie>();
-            zom.setHealth(zom.getHealth()-1);
+            if(!zom.spawning){
+                zom.setHealth(zom.getHealth()-1);
+            }
             this.QueueFree();
         }
         if(body.Name == "TileMap"){

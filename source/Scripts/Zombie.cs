@@ -21,6 +21,10 @@ public class Zombie : Node2D
     int currentPoint = 1; //Stores the current point to move to
     int speed = 280;
     Player player;
+    public bool spawning = true;
+    int spawnTime = 0;
+    int deathTime = 0;
+    bool isDead = false;
 
     public override void _Ready()
     {
@@ -28,11 +32,41 @@ public class Zombie : Node2D
         player = playerm.player;
         scene = GetTree().CurrentScene;
         healthProg = GetNode<TextureProgress>("HealthBar");
+        GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("AnimatedSprite").Visible = false;
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta){
-        PathFind();
+        if(isDead){
+            if(deathTime<80){
+                deathTime++;
+                GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("AnimatedSprite").Play("Death");
+            }
+            else{
+                GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("AnimatedSprite").Play("Dead");
+                return;
+            }
+        }
+        if(!spawning && !isDead){
+            GetNode<TextureProgress>("HealthBar").Visible = true;
+            GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("Spawning").Visible = false;
+            PathFind();
+            GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("AnimatedSprite").Play("Walking");
+        }
+        else{
+            GetNode<TextureProgress>("HealthBar").Visible = false;
+           GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("Spawning").Play("Spawning"); 
+           if(spawnTime<120){
+                spawnTime++;
+                if(spawnTime>60){
+                   GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("AnimatedSprite").Visible = true;
+                   GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("AnimatedSprite").Play("default");
+               }
+           }
+           else{
+               spawning = false;
+           }
+        }
     }
 
     void PathFind()
@@ -78,8 +112,11 @@ public class Zombie : Node2D
         
         if(nhealth <= 0){
             player.AddKills(1);
-            QueueFree();
-            //TODO DEATH CODE
+            health = nhealth;
+            healthProg.Value = nhealth;
+            GetNode<KinematicBody2D>("Zombie").GetNode<CollisionShape2D>("CollisionShape2D").QueueFree();
+            GetNode<KinematicBody2D>("Zombie").GetNode<Area2D>("Area2D").QueueFree();
+            isDead = true;
         }
         else{
             health = nhealth;
@@ -101,12 +138,14 @@ public class Zombie : Node2D
     }
 
     public void BodyEntered(Node body){
-        if(body.Name == "Player"){
-            PlayerMovement player = (PlayerMovement)body;
-            player.player.SetHealth(player.player.GetHealth()-1);
-            GD.Print(player.player.GetHealth());
-            player.knockback = 3;
-            player.lasthitbody = GetNode<KinematicBody2D>("Zombie");
+        if(!spawning){
+            if(body.Name == "Player"){
+                PlayerMovement player = (PlayerMovement)body;
+                player.player.SetHealth(player.player.GetHealth()-1);
+                GD.Print(player.player.GetHealth());
+                player.knockback = 3;
+                player.lasthitbody = GetNode<KinematicBody2D>("Zombie");
+            }
         }
     }
 

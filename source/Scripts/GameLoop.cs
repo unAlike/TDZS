@@ -42,7 +42,9 @@ public class GameLoop : Node
 				//GD.Print(x + " " + y + " Invalid Spawn");
 			}
 			else{
+				
 				Zombie zom = ZombieScene.Instance<Zombie>();
+				
 				zom.setTarget(player);
 				zom.setNav(nav);
 				GetParent().AddChild(zom);
