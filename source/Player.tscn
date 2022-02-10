@@ -72,6 +72,7 @@ shape = SubResource( 5 )
 position = Vector2( 6, 0 )
 rotation = 1.5708
 scale = Vector2( 3, 3 )
+z_index = 10
 frames = SubResource( 8 )
 animation = "Death"
 
