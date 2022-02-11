@@ -28,6 +28,7 @@ public class PlayerMovement : KinematicBody2D
     public Player player = new Player();
     public float knockback = 0;
     public KinematicBody2D lasthitbody;
+    GameLoop gl; 
 
 
     public override void _Ready(){
@@ -37,14 +38,11 @@ public class PlayerMovement : KinematicBody2D
         speed = player.GetSpeed();
         stamina = maxStamina;
         animationPlayer = GetNode<AnimatedSprite>("AnimatedSprite");
-    }
-    public override void _Input(InputEvent inputEvent){
-        if(inputEvent is InputEventMouseButton button){
-            shoot();
-        }
+        gl = (GameLoop)(GetTree().Root.GetNode<Node2D>("Node2D"));
     }
 
     public override void _Process(float delta){
+        delta = delta * (1+(gl.level*.1f));
         shotCooldown += delta;
         if(Input.IsMouseButtonPressed(1)){
             shoot();
@@ -52,9 +50,6 @@ public class PlayerMovement : KinematicBody2D
         if(player.GetHealth()>0){ 
             MovePlayer(delta);
             LookAt(GetGlobalMousePosition());
-        }
-        else{
-            //Death Anim End Game
         }
     }
 
@@ -136,7 +131,7 @@ public class PlayerMovement : KinematicBody2D
                 GetNode<AudioStreamPlayer2D>("DamageSound").Play();
         }
         //Update the players position
-        MoveAndSlide(velocity);
+        MoveAndSlide(velocity*((1+gl.level*.1f)));
     }
 
 

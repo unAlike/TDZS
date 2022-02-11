@@ -61,7 +61,7 @@ animations = [ {
 "frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
 "loop": true,
 "name": "Death",
-"speed": 15.0
+"speed": 3.0
 } ]
 
 [sub_resource type="AudioStreamRandomPitch" id=17]

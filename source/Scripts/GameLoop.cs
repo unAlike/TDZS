@@ -1,15 +1,17 @@
 using Godot;
 using System;
 
-public class GameLoop : Node
+public class GameLoop : Node2D
 {
 	float time = 0;
 	public int kills = 0;
+	int lastLevelUp = 0;
 	RandomNumberGenerator rng = new RandomNumberGenerator();
 	PackedScene ZombieScene;
 	PlayerMovement player;
 	Navigation2D nav;
 	int zomcount = 0;
+	public int level = 1;
 	public override void _Ready()
 	{
 		ZombieScene = GD.Load<PackedScene>("res://Zombie.tscn");
@@ -19,11 +21,22 @@ public class GameLoop : Node
 	}
 	public override void _Process(float delta)
 	{
+		GetNode<KinematicBody2D>("Player").GetNode<Camera2D>("Camera2D").Zoom = new Vector2(2+level*.05f,2+level*.05f);
+		kills = player.player.GetKills();
+		delta = delta * (1+(level*.1f));
 		time += delta;
 		if(Math.Floor(time)>zomcount){
 			SpawnZombie();
 			zomcount++;
 			//GD.Print("Spawned Zombie");
+		}
+		if(kills%25 == 0){
+			GD.Print(kills);
+			if(kills!=lastLevelUp){
+				lastLevelUp=kills;
+				level++;
+				GD.Print("Level Up");
+			}
 		}
 	}
 

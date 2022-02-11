@@ -25,6 +25,8 @@ public class Zombie : Node2D
     int spawnTime = 0;
     int deathTime = 0;
     bool isDead = false;
+    GameLoop gl; 
+    CollisionShape2D collider;
 
     public override void _Ready()
     {
@@ -33,10 +35,14 @@ public class Zombie : Node2D
         scene = GetTree().CurrentScene;
         healthProg = GetNode<TextureProgress>("HealthBar");
         GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("AnimatedSprite").Visible = false;
+        gl = (GameLoop)(GetTree().Root.GetNode<Node2D>("Node2D"));
+        collider = GetNode<KinematicBody2D>("Zombie").GetNode<CollisionShape2D>("CollisionShape2D");
+
     }
 
 //  // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(float delta){
+        delta = delta * (1+(gl.level*.1f));
         if(isDead){
             if(deathTime<80){
                 deathTime++;
@@ -52,10 +58,12 @@ public class Zombie : Node2D
             GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("Spawning").Visible = false;
             PathFind();
             GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("AnimatedSprite").Play("Walking");
+            collider.Disabled = false;
         }
         else{
             GetNode<TextureProgress>("HealthBar").Visible = false;
-           GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("Spawning").Play("Spawning"); 
+           GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("Spawning").Play("Spawning");
+           collider.Disabled = true;
            if(spawnTime<120){
                 spawnTime++;
                 if(spawnTime>60){
@@ -90,6 +98,7 @@ public class Zombie : Node2D
             {
                 //Move Zombie towards the current point
                 velocity = zom.GlobalPosition.DirectionTo(path[currentPoint]) * speed;
+                // zom.MoveAndSlide(velocity*(1+(gl.level*.1f)));
                 zom.MoveAndSlide(velocity);
             }
 

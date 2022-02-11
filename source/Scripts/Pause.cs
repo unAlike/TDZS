@@ -7,10 +7,12 @@ public class Pause : Node
     bool InControls = false;
     bool InPause = false;
     bool IsDead = false;
+    int deathTime = 0;
     Player player;
+    PlayerMovement playerm;
     public override void _Ready(){
         GD.Print(GetTree().CurrentScene.Name);
-        var playerm =  (PlayerMovement)(GetTree().CurrentScene.GetNode<KinematicBody2D>("Player"));
+        playerm =  (PlayerMovement)(GetTree().CurrentScene.GetNode<KinematicBody2D>("Player"));
         player = playerm.player;
         PauseMenu = GetNode<ColorRect>("PauseMenu");
         ControlsMenu = GetNode<ColorRect>("Controls");
@@ -32,10 +34,17 @@ public class Pause : Node
             InControls = false;
         }
         try{
-            if(player.GetHealth() == 0) {
-                GetTree().Paused = true;
-                DeathMenu.Visible = true;
-                IsDead = true;
+            if(player.GetHealth() <= 0) {
+                if(deathTime<100){
+                    playerm.GetNode<AnimatedSprite>("AnimatedSprite").Play("Death");
+                    deathTime++;
+                }
+                else{
+                    GetTree().Paused = true;
+                    DeathMenu.Visible = true;
+                    IsDead = true;
+                }
+                
             }
         }catch(NullReferenceException){
 

@@ -6,8 +6,9 @@ public class UI : CanvasLayer
 
     TextureProgress PlayerHealth;
     Player HealthUI = new Player();
-    RichTextLabel ScoreUI;
+    RichTextLabel ScoreUI, LevelUI;
     Player player;
+    GameLoop gl;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -18,6 +19,8 @@ public class UI : CanvasLayer
         GD.Print(playerm.player.GetHealth());
         PlayerHealth = GetNode<TextureProgress>("PlayerHealth");
         ScoreUI = GetNode<RichTextLabel>("PlayerScore");
+        LevelUI = GetNode<RichTextLabel>("Level");
+        gl = (GameLoop)(GetTree().Root.GetNode<Node2D>("Node2D"));
     }
 
     // Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -26,7 +29,7 @@ public class UI : CanvasLayer
         PlayerHealth.Value = player.GetHealth();
         PlayerHealth.MaxValue = player.GetMaxHealth();
         ScoreUI.Text = "" + (player.GetKills());
-
+        LevelUI.Text = "Level: " + gl.level;
     }
 
 }
