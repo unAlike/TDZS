@@ -109,11 +109,12 @@ public class Zombie : Node2D
     }
 
     public void setHealth(int nhealth){
-        
+        GetNode<AudioStreamPlayer2D>("DamageSound").Play();
         if(nhealth <= 0){
             player.AddKills(1);
             health = nhealth;
             healthProg.Value = nhealth;
+            GetNode<AudioStreamPlayer2D>("DeathSound").Play();
             GetNode<KinematicBody2D>("Zombie").GetNode<CollisionShape2D>("CollisionShape2D").QueueFree();
             GetNode<KinematicBody2D>("Zombie").GetNode<Area2D>("Area2D").QueueFree();
             isDead = true;
@@ -145,6 +146,8 @@ public class Zombie : Node2D
                 GD.Print(player.player.GetHealth());
                 player.knockback = 3;
                 player.lasthitbody = GetNode<KinematicBody2D>("Zombie");
+                if(!GetNode<AudioStreamPlayer2D>("AttackSound").Playing)
+                    GetNode<AudioStreamPlayer2D>("AttackSound").Play();
             }
         }
     }
@@ -154,7 +157,7 @@ public class Zombie : Node2D
     {
         nav = levelNav;
         path = new List<Vector2>(nav.GetSimplePath(GlobalPosition, target.GlobalPosition, true)); //Generate an initial path
-        
+        GetNode<AudioStreamPlayer2D>("SpawnSound").Play();
     }
 
 }

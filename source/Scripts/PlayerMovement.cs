@@ -41,7 +41,6 @@ public class PlayerMovement : KinematicBody2D
     public override void _Input(InputEvent inputEvent){
         if(inputEvent is InputEventMouseButton button){
             shoot();
-            GD.Print("Shot");
         }
     }
 
@@ -107,6 +106,10 @@ public class PlayerMovement : KinematicBody2D
 
             //Play the walk animation
             animationPlayer.Play("Walk");
+
+            if(!GetNode<AudioStreamPlayer2D>("StepSound").Playing)
+                GetNode<AudioStreamPlayer2D>("StepSound").Play();
+
         }
         else
         {
@@ -126,9 +129,11 @@ public class PlayerMovement : KinematicBody2D
         if(knockback>0){
             Vector2 knock_point =  GlobalPosition - lasthitbody.GlobalPosition;
             velocity = knock_point.Normalized() * 800;
-
+            
             MoveAndSlide(velocity);
             knockback--;
+            if(!GetNode<AudioStreamPlayer2D>("DamageSound").Playing)
+                GetNode<AudioStreamPlayer2D>("DamageSound").Play();
         }
         //Update the players position
         MoveAndSlide(velocity);
@@ -146,6 +151,7 @@ public class PlayerMovement : KinematicBody2D
             bullet.Position = GetNode<Position2D>("MuzzlePos").GlobalPosition;
             bullet.ApplyCentralImpulse(new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation)) * 3000);
             GD.Print(bullet);
+            GetNode<AudioStreamPlayer2D>("ShootSound").Play();
 
         }
     }

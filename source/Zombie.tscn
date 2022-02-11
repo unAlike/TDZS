@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://art/Updated_Zombie_sprite.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Zombie.cs" type="Script" id=2]
@@ -6,6 +6,10 @@
 [ext_resource path="res://art/Zombie_walk_sprite_sheet_1.png" type="Texture" id=4]
 [ext_resource path="res://art/Zombie_spawn_sprite_sheet.png" type="Texture" id=5]
 [ext_resource path="res://art/Zombie_death_animation_sprite_sheet.png" type="Texture" id=6]
+[ext_resource path="res://Audio/ZombieSounds/zombiesound1.wav" type="AudioStream" id=7]
+[ext_resource path="res://Audio/ZombieSounds/zombieAttackSound1.wav" type="AudioStream" id=8]
+[ext_resource path="res://Audio/ZombieSounds/zombieDeathSound1.wav" type="AudioStream" id=9]
+[ext_resource path="res://Audio/ZombieSounds/zombieDamageSound.wav" type="AudioStream" id=10]
 
 [sub_resource type="AtlasTexture" id=14]
 atlas = ExtResource( 6 )
@@ -116,6 +120,21 @@ vertices = PoolVector2Array( -8.33334, 8.42697, -12.8205, 7.02247, -16.3462, 2.2
 polygons = [ PoolIntArray( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 ) ]
 outlines = [ PoolVector2Array( -8.33334, 8.42697, -12.8205, 7.02247, -16.3462, 2.24719, -16.3462, -4.21348, -12.5, -8.14607, -8.01282, -9.55056, -3.52564, -9.55056, 0, -8.42697, 3.20513, -5.05618, 4.48718, -1.1236, 3.20513, 3.65169, 0, 6.74157, -4.16667, 8.14607 ) ]
 
+[sub_resource type="AudioStreamRandomPitch" id=24]
+audio_stream = ExtResource( 7 )
+random_pitch = 1.23
+
+[sub_resource type="AudioStreamRandomPitch" id=23]
+audio_stream = ExtResource( 8 )
+random_pitch = 1.13
+
+[sub_resource type="AudioStreamRandomPitch" id=22]
+audio_stream = ExtResource( 9 )
+
+[sub_resource type="AudioStreamRandomPitch" id=21]
+audio_stream = ExtResource( 10 )
+random_pitch = 1.0
+
 [node name="ZombieScene" type="Node2D"]
 position = Vector2( 19, 2 )
 script = ExtResource( 2 )
@@ -165,5 +184,26 @@ shape = SubResource( 3 )
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Zombie/Navigation2D"]
 navpoly = SubResource( 4 )
+
+[node name="SpawnSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 24 )
+pitch_scale = 0.7
+max_distance = 1500.0
+attenuation = 2.73208
+
+[node name="AttackSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 23 )
+volume_db = -4.376
+pitch_scale = 0.67
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 22 )
+attenuation = 3.13834
+
+[node name="DamageSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 21 )
+volume_db = 2.151
+pitch_scale = 0.78
+attenuation = 0.594604
 
 [connection signal="body_entered" from="Zombie/Area2D" to="." method="BodyEntered"]

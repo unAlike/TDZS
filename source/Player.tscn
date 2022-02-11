@@ -1,8 +1,12 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://art/Main_Character_Walk_Animation_Sprite_Sheet.png" type="Texture" id=1]
 [ext_resource path="res://art/MC_Death_Animation_Sprite_Sheet.png" type="Texture" id=2]
+[ext_resource path="res://Audio/151022__bubaproducer__laser-shot-silenced.wav" type="AudioStream" id=3]
+[ext_resource path="res://Audio/playerHurt2.wav" type="AudioStream" id=4]
 [ext_resource path="res://Scripts/PlayerMovement.cs" type="Script" id=5]
+[ext_resource path="res://Audio/playerDeath.wav" type="AudioStream" id=6]
+[ext_resource path="res://Audio/playerStep.wav" type="AudioStream" id=7]
 
 [sub_resource type="CircleShape2D" id=5]
 radius = 11.0
@@ -60,6 +64,19 @@ animations = [ {
 "speed": 15.0
 } ]
 
+[sub_resource type="AudioStreamRandomPitch" id=17]
+audio_stream = ExtResource( 3 )
+random_pitch = 1.73
+
+[sub_resource type="AudioStreamRandomPitch" id=18]
+audio_stream = ExtResource( 4 )
+
+[sub_resource type="AudioStreamRandomPitch" id=19]
+audio_stream = ExtResource( 6 )
+
+[sub_resource type="AudioStreamRandomPitch" id=20]
+audio_stream = ExtResource( 7 )
+
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 5 )
 
@@ -78,3 +95,22 @@ animation = "Death"
 
 [node name="MuzzlePos" type="Position2D" parent="."]
 position = Vector2( 49, -2 )
+
+[node name="ShootSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 17 )
+volume_db = -13.984
+pitch_scale = 1.88
+
+[node name="DamageSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 18 )
+volume_db = -13.109
+pitch_scale = 0.9
+attenuation = 1.6245
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 19 )
+
+[node name="StepSound" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 20 )
+volume_db = -22.723
+pitch_scale = 0.71
