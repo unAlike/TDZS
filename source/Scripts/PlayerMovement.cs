@@ -123,9 +123,8 @@ public class PlayerMovement : KinematicBody2D
 
         if(knockback>0){
             Vector2 knock_point =  GlobalPosition - lasthitbody.GlobalPosition;
-            velocity = knock_point.Normalized() * 800;
+            velocity += knock_point.Normalized() * 800;
             
-            MoveAndSlide(velocity);
             knockback--;
             if(!GetNode<AudioStreamPlayer2D>("DamageSound").Playing)
                 GetNode<AudioStreamPlayer2D>("DamageSound").Play();
