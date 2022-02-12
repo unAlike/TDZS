@@ -152,7 +152,7 @@ public class Zombie : Node2D
             if(body.Name == "Player"){
                 PlayerMovement player = (PlayerMovement)body;
                 player.player.SetHealth(player.player.GetHealth()-1);
-                GD.Print(player.player.GetHealth());
+                // GD.Print(player.player.GetHealth());
                 player.knockback = 3;
                 player.lasthitbody = GetNode<KinematicBody2D>("Zombie");
                 if(!GetNode<AudioStreamPlayer2D>("AttackSound").Playing)
