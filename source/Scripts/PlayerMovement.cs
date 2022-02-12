@@ -144,7 +144,7 @@ public class PlayerMovement : KinematicBody2D
             // GetParent().AddChildBelowNode(GetNode<Area2D>("Player"), bullet);
             bullet.Position = GetNode<Position2D>("MuzzlePos").GlobalPosition;
             bullet.ApplyCentralImpulse(new Vector2(Mathf.Cos(Rotation), Mathf.Sin(Rotation)) * 3000);
-            GD.Print(bullet);
+            // GD.Print(bullet);
             GetNode<AudioStreamPlayer2D>("ShootSound").Play();
 
         }

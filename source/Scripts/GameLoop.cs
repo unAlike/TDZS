@@ -21,7 +21,10 @@ public class GameLoop : Node2D
 	}
 	public override void _Process(float delta)
 	{
-		GetNode<KinematicBody2D>("Player").GetNode<Camera2D>("Camera2D").Zoom = new Vector2(2+level*.05f,2+level*.05f);
+		if(GetNode<KinematicBody2D>("Player").GetNode<Camera2D>("Camera2D").Zoom <= new Vector2(2+level*.05f,2+level*.05f)){
+			GetNode<KinematicBody2D>("Player").GetNode<Camera2D>("Camera2D").Zoom += new Vector2(.001f,.001f);
+		}
+		
 		kills = player.player.GetKills();
 		delta = delta * (1+(level*.1f));
 		time += delta;
@@ -31,11 +34,11 @@ public class GameLoop : Node2D
 			//GD.Print("Spawned Zombie");
 		}
 		if(kills%25 == 0){
-			GD.Print(kills);
+			// GD.Print(kills);
 			if(kills!=lastLevelUp){
 				lastLevelUp=kills;
 				level++;
-				GD.Print("Level Up");
+				// GD.Print("Level Up");
 			}
 		}
 	}
@@ -55,7 +58,7 @@ public class GameLoop : Node2D
 				//GD.Print(x + " " + y + " Invalid Spawn");
 			}
 			else{
-				
+
 				Zombie zom = ZombieScene.Instance<Zombie>();
 				
 				zom.setTarget(player);

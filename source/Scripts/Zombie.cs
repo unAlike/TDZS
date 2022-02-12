@@ -27,6 +27,7 @@ public class Zombie : Node2D
     bool isDead = false;
     GameLoop gl; 
     CollisionShape2D collider;
+    Boolean colDisabled = false;
 
     public override void _Ready()
     {
@@ -58,13 +59,19 @@ public class Zombie : Node2D
             GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("Spawning").Visible = false;
             PathFind();
             GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("AnimatedSprite").Play("Walking");
-            collider.Disabled = false;
+            if(colDisabled) {
+                collider.Disabled = false;
+                colDisabled = false;
+            }
         }
         else{
             GetNode<TextureProgress>("HealthBar").Visible = false;
-           GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("Spawning").Play("Spawning");
-           collider.Disabled = true;
-           if(spawnTime<120){
+            GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("Spawning").Play("Spawning");
+            if(!colDisabled){
+                collider.Disabled = true;
+                colDisabled = true;
+            } 
+            if(spawnTime<120){
                 spawnTime++;
                 if(spawnTime>60){
                    GetNode<KinematicBody2D>("Zombie").GetNode<AnimatedSprite>("AnimatedSprite").Visible = true;
@@ -165,7 +172,7 @@ public class Zombie : Node2D
     public void setNav(Navigation2D levelNav)
     {
         nav = levelNav;
-        path = new List<Vector2>(nav.GetSimplePath(GlobalPosition, target.GlobalPosition, true)); //Generate an initial path
+        path = new List<Vector2>(nav.GetSimplePath(Position, target.Position, true)); //Generate an initial path
         GetNode<AudioStreamPlayer2D>("SpawnSound").Play();
     }
 

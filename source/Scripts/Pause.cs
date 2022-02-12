@@ -11,7 +11,6 @@ public class Pause : Node
     Player player;
     PlayerMovement playerm;
     public override void _Ready(){
-        GD.Print(GetTree().CurrentScene.Name);
         playerm =  (PlayerMovement)(GetTree().CurrentScene.GetNode<KinematicBody2D>("Player"));
         player = playerm.player;
         PauseMenu = GetNode<ColorRect>("PauseMenu");
@@ -68,10 +67,8 @@ public class Pause : Node
         player.SetKills(0);
         GetTree().ChangeScene("res://MainMenu.tscn");
         foreach(Node n in GetTree().Root.GetChildren()){
-            GD.Print(n.Name);
             if(n.Name == "Node2D"){
                 n.QueueFree();
-                GD.Print("Killed");
             }
             if(n.Name.Contains("Zombie")){
                 n.QueueFree();
@@ -92,10 +89,10 @@ public class Pause : Node
 
     public void _on_Replay_pressed() {
         foreach(Node n in GetTree().Root.GetChildren()){
-                GD.Print(n.Name);
+                // GD.Print(n.Name);
                 if(n.Name == "Node2D"){
                     n.QueueFree();
-                    GD.Print("Killed");
+                    // GD.Print("Killed");
                 }
                 if(n.Name.Contains("Zombie")){
                     n.QueueFree();

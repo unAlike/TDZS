@@ -13,10 +13,10 @@ public class UI : CanvasLayer
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        GD.Print(GetTree().CurrentScene.Name);
+        // GD.Print(GetTree().CurrentScene.Name);
         var playerm =  (PlayerMovement)(GetTree().CurrentScene.GetNode<KinematicBody2D>("Player"));
         player = playerm.player;
-        GD.Print(playerm.player.GetHealth());
+        // GD.Print(playerm.player.GetHealth());
         PlayerHealth = GetNode<TextureProgress>("PlayerHealth");
         ScoreUI = GetNode<RichTextLabel>("PlayerScore");
         LevelUI = GetNode<RichTextLabel>("Level");

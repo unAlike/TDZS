@@ -18,8 +18,6 @@ public class Bullet : RigidBody2D
     }
 
     public void Entered(Node body){
-        GD.Print("Hit");
-        GD.Print(body);
         if(body.Name == "Zombie"){
             Zombie zom = body.GetParent<Zombie>();
             if(!zom.spawning){
