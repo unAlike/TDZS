@@ -12,6 +12,7 @@ public class GameLoop : Node2D
 	Navigation2D nav;
 	int zomcount = 0;
 	public int level = 1;
+	int trackNum = 0;
 	public override void _Ready()
 	{
 		ZombieScene = GD.Load<PackedScene>("res://Zombie.tscn");
@@ -39,6 +40,42 @@ public class GameLoop : Node2D
 				lastLevelUp=kills;
 				level++;
 				// GD.Print("Level Up");
+			}
+		}
+		GD.Print(GetNode<AudioStreamPlayer>("Track1").GetPlaybackPosition());
+		if(level>=0&&level<3){
+			if(trackNum<1){
+				trackNum++;
+				GetNode<AudioStreamPlayer>("Track1").Playing = true;
+				GetNode<AudioStreamPlayer>("Track2").Playing = false;
+				GetNode<AudioStreamPlayer>("Track3").Playing = false;
+			}
+		}
+		else if(level>2&&level<5){
+			if(trackNum<2){
+				
+				if(GetNode<AudioStreamPlayer>("Track1").GetPlaybackPosition() >= 4.7f){
+					GetNode<AudioStreamPlayer>("Track1").Playing = false;
+					GetNode<AudioStreamPlayer>("Track2").Playing = true;
+					GetNode<AudioStreamPlayer>("Track3").Playing = false;
+					trackNum++;
+				}
+
+			}
+		}
+		else if(level>4&&level<7){
+			if(trackNum<3){
+				if(GetNode<AudioStreamPlayer>("Track2").GetPlaybackPosition() >= 4.7f){
+					GetNode<AudioStreamPlayer>("Track1").Playing = false;
+					GetNode<AudioStreamPlayer>("Track2").Playing = false;
+					GetNode<AudioStreamPlayer>("Track3").Playing = true;
+					trackNum++;
+				}
+			}
+		}
+		else if(level>6&&level<9){
+			if(trackNum<4){
+				trackNum++;
 			}
 		}
 	}

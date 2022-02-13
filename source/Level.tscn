@@ -1,9 +1,12 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Scripts/GameLoop.cs" type="Script" id=1]
 [ext_resource path="res://TileMap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Control.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Audio/Music/TDZS-Track1.mp3" type="AudioStream" id=5]
+[ext_resource path="res://Audio/Music/TDZS-Track3.mp3" type="AudioStream" id=6]
+[ext_resource path="res://Audio/Music/TDZS-Track2.mp3" type="AudioStream" id=7]
 
 [sub_resource type="NavigationPolygon" id=1]
 vertices = PoolVector2Array( 2651, 640, 2652, 2238, 2623, 2239, 1963, 1312, 1960, 740, 2617, 610, 1322, 1934, 2499, 2364, 1919, 2363, 1472, 2809, 95, 2812, 821, 2087, 2548, 428, 2588, 490, 2432, 384, 2201, 196, 1790, 573, 2082, 170, 1250, 165, 1405, 566, -61, 2968, -763, 2973, -765, 2944, -795, 2941, -795, 2751, 451, 2087, 108, 1739, -825, 2750, -829, 2720, -846, 1867, -572, 1583, -82, -77, 989, -68, 1234, 722, -439, 219, -1075, 2468, -1074, 2032, 1229, 953, 1170, 1012, 274, 1013, -661, 437, -752, 1149, -791, 780, -781, 553, 115, 1153, -567, 1344, 953, 1942 )
@@ -35,3 +38,16 @@ smoothing_enabled = true
 
 [node name="NavigationPolygonInstance" type="NavigationPolygonInstance" parent="Navigation2D"]
 navpoly = SubResource( 1 )
+
+[node name="Track1" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = 7.0
+autoplay = true
+
+[node name="Track2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )
+volume_db = 7.0
+
+[node name="Track3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = 7.0
