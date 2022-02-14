@@ -13,8 +13,8 @@ public class PlayerMovement : KinematicBody2D
 
     private bool sprint; //Tells if the player is hitting the sprint button
     private float sprintMultiplier = 1.5f; //Speed multiplier when sprinting
-    private float maxStamina = 1; //Maximum amount of stamina
-    private float stamina; //Holds the current stamina at any point
+    public float maxStamina = 1; //Maximum amount of stamina
+    public float stamina; //Holds the current stamina at any point
     private float staminaGainRate = 0.5f; //Rate that stamina regenerates at
 
     private Vector2 velocity = Vector2.Zero; //Velocity that starts at zero
