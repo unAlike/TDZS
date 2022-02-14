@@ -137,7 +137,6 @@ public class GameLoop : Node2D
 			bool valid = false;
 			for(int r = -5; r<5; r++){
 				for(int c = -5; c<5;c++){
-					GD.Print(r + " " + c);
 					if(tile.GetCell(x,y) == 3 || tile.GetCell(x+r,y+c) == TileMap.InvalidCell ){
 						x = rng.RandiRange((int)(rect.Position.x),(int)(rect.End.x));
 						y = rng.RandiRange((int)(rect.Position.y),(int)(rect.End.y));
