@@ -25,7 +25,7 @@ public class Bullet : RigidBody2D
             }
             this.QueueFree();
         }
-        if(body.Name == "TileMap"){
+        if(body.Name == "TileMap" || body.Name == "Walls"){
             this.QueueFree();
         }
     }

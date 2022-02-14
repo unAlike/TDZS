@@ -1,0 +1,20 @@
+[remap]
+
+importer="vnen.tiled_tileset_importer"
+type="TileSet"
+path="res://.import/Pod landing site.tsx-a2089fb7e77c1d48180b3ef16df5390f.res"
+
+[deps]
+
+source_file="res://TZDS_Tilemap/TZDS_Tilemap/Pod landing site.tsx"
+dest_files=[ "res://.import/Pod landing site.tsx-a2089fb7e77c1d48180b3ef16df5390f.res" ]
+
+[params]
+
+custom_properties=true
+tile_metadata=false
+image_flags=7
+embed_internal_images=false
+save_tiled_properties=false
+apply_offset=false
+post_import_script=""

@@ -20,7 +20,7 @@ public class Menu : Node
 
 	public void _on_Controls_pressed() {
 		Controls.Visible = true;
-		Main.Visible = false;
+		//Main.Visible = false;
 		InMenu = true;
 	}
 
@@ -30,14 +30,14 @@ public class Menu : Node
 
 	public void _on_Back_pressed() {
 		Controls.Visible = false;
-		Main.Visible = true;
+		//Main.Visible = true;
 	}
 
 	public override void _Process(float delta)
   {
 	  if(Input.IsActionJustPressed("ui_cancel") & InMenu == true) {
 		  Controls.Visible = false;
-		  Main.Visible = true;
+		  //Main.Visible = true;
 	  }
   }
 }

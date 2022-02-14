@@ -29,7 +29,7 @@ public class Pause : Node
 
         if(Input.IsActionJustPressed("ui_cancel") & InControls == true) {
             ControlsMenu.Visible = false;
-            PauseMenu.Visible = true;
+            //PauseMenu.Visible = true;
             InControls = false;
         }
         try{
@@ -58,7 +58,7 @@ public class Pause : Node
 
     public void _on_Controls_pressed() {
         ControlsMenu.Visible = true;
-        PauseMenu.Visible = false;
+        //PauseMenu.Visible = false;
         InControls = true;
     }
 
@@ -83,7 +83,7 @@ public class Pause : Node
 
     public void _on_Back_pressed() {
         ControlsMenu.Visible = false;
-        PauseMenu.Visible = true;
+        //PauseMenu.Visible = true;
         InControls = false;
     }
 

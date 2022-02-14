@@ -43,7 +43,7 @@ public class GameLoop : Node2D
 				// GD.Print("Level Up");
 			}
 		}
-		GD.Print(GetNode<AudioStreamPlayer>("Track1").GetPlaybackPosition());
+		//GD.Print(GetNode<AudioStreamPlayer>("Track1").GetPlaybackPosition());
 		if(level>=0&&level<3){
 			if(trackNum<1){
 				trackNum++;
