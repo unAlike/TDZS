@@ -33,6 +33,7 @@ public class GameLoop : Node2D
 			SpawnZombie();
 			zomcount++;
 			//GD.Print("Spawned Zombie");
+			GetNode<AudioStreamPlayer2D>("LevelUpSound").Play();
 		}
 		if(kills%25 == 0){
 			// GD.Print(kills);

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/528958__beetlemuse__level-up-mission-complete.wav-6f145acee872a42e2172bb6762a6c877.sample"
+
+[deps]
+
+source_file="res://Audio/528958__beetlemuse__level-up-mission-complete.wav"
+dest_files=[ "res://.import/528958__beetlemuse__level-up-mission-complete.wav-6f145acee872a42e2172bb6762a6c877.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
