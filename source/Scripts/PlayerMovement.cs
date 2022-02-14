@@ -52,6 +52,15 @@ public class PlayerMovement : KinematicBody2D
             LookAt(GetGlobalMousePosition());
         }
     }
+    public override void _Input(InputEvent e)
+    {
+        // if(e is InputEventKey eventKey){
+        //     if(eventKey.Pressed && eventKey.Scancode == (int)KeyList.L){
+        //         gl.level++;
+        //         player.AddKills(25);
+        //     }
+        // }
+    }
 
     public void MovePlayer(float delta){
         //Start each frame with clear input velocity

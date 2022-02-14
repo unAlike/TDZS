@@ -33,7 +33,7 @@ public class GameLoop : Node2D
 			SpawnZombie();
 			zomcount++;
 			//GD.Print("Spawned Zombie");
-			GetNode<AudioStreamPlayer2D>("LevelUpSound").Play();
+			
 		}
 		if(kills%25 == 0){
 			// GD.Print(kills);
@@ -41,6 +41,7 @@ public class GameLoop : Node2D
 				lastLevelUp=kills;
 				level++;
 				// GD.Print("Level Up");
+				GetNode<AudioStreamPlayer>("LevelUpSound").Play();
 			}
 		}
 		//GD.Print(GetNode<AudioStreamPlayer>("Track1").GetPlaybackPosition());
@@ -50,6 +51,9 @@ public class GameLoop : Node2D
 				GetNode<AudioStreamPlayer>("Track1").Playing = true;
 				GetNode<AudioStreamPlayer>("Track2").Playing = false;
 				GetNode<AudioStreamPlayer>("Track3").Playing = false;
+				GetNode<AudioStreamPlayer>("Track4").Playing = false;
+				GetNode<AudioStreamPlayer>("Track5").Playing = false;
+				GetNode<AudioStreamPlayer>("Track6").Playing = false;
 			}
 		}
 		else if(level>2&&level<5){
@@ -59,6 +63,9 @@ public class GameLoop : Node2D
 					GetNode<AudioStreamPlayer>("Track1").Playing = false;
 					GetNode<AudioStreamPlayer>("Track2").Playing = true;
 					GetNode<AudioStreamPlayer>("Track3").Playing = false;
+					GetNode<AudioStreamPlayer>("Track4").Playing = false;
+					GetNode<AudioStreamPlayer>("Track5").Playing = false;
+					GetNode<AudioStreamPlayer>("Track6").Playing = false;
 					trackNum++;
 				}
 
@@ -70,13 +77,50 @@ public class GameLoop : Node2D
 					GetNode<AudioStreamPlayer>("Track1").Playing = false;
 					GetNode<AudioStreamPlayer>("Track2").Playing = false;
 					GetNode<AudioStreamPlayer>("Track3").Playing = true;
+					GetNode<AudioStreamPlayer>("Track4").Playing = false;
+					GetNode<AudioStreamPlayer>("Track5").Playing = false;
+					GetNode<AudioStreamPlayer>("Track6").Playing = false;
 					trackNum++;
 				}
 			}
 		}
 		else if(level>6&&level<9){
 			if(trackNum<4){
-				trackNum++;
+				if(GetNode<AudioStreamPlayer>("Track3").GetPlaybackPosition() >= 4.7f){
+					GetNode<AudioStreamPlayer>("Track1").Playing = false;
+					GetNode<AudioStreamPlayer>("Track2").Playing = false;
+					GetNode<AudioStreamPlayer>("Track3").Playing = false;
+					GetNode<AudioStreamPlayer>("Track4").Playing = true;
+					GetNode<AudioStreamPlayer>("Track5").Playing = false;
+					GetNode<AudioStreamPlayer>("Track6").Playing = false;
+					trackNum++;
+				}
+			}
+		}
+		else if(level>8&&level<11){
+			if(trackNum<5){
+				if(GetNode<AudioStreamPlayer>("Track4").GetPlaybackPosition() >= 4.55f){
+					GetNode<AudioStreamPlayer>("Track1").Playing = false;
+					GetNode<AudioStreamPlayer>("Track2").Playing = false;
+					GetNode<AudioStreamPlayer>("Track3").Playing = false;
+					GetNode<AudioStreamPlayer>("Track4").Playing = false;
+					GetNode<AudioStreamPlayer>("Track5").Playing = true;
+					GetNode<AudioStreamPlayer>("Track6").Playing = false;
+					trackNum++;
+				}
+			}
+		}
+		else if(level>10){
+			if(trackNum<6){
+				if(GetNode<AudioStreamPlayer>("Track5").GetPlaybackPosition() >= 4.3f){
+					GetNode<AudioStreamPlayer>("Track1").Playing = false;
+					GetNode<AudioStreamPlayer>("Track2").Playing = false;
+					GetNode<AudioStreamPlayer>("Track3").Playing = false;
+					GetNode<AudioStreamPlayer>("Track4").Playing = false;
+					GetNode<AudioStreamPlayer>("Track5").Playing = false;
+					GetNode<AudioStreamPlayer>("Track6").Playing = true;
+					trackNum++;
+				}
 			}
 		}
 	}

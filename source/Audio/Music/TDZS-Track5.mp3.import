@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/TDZS-Track5.mp3-617517c1fd85fd4ef33c94cef89edacb.mp3str"
+
+[deps]
+
+source_file="res://Audio/Music/TDZS-Track5.mp3"
+dest_files=[ "res://.import/TDZS-Track5.mp3-617517c1fd85fd4ef33c94cef89edacb.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
